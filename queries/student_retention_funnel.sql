@@ -1,43 +1,38 @@
-WITH recent_activity AS (
-    -- STEP 1: Ambil aktivitas 30 hari terakhir
-    SELECT
-        student_id,
-        activity_date
-    FROM activity_log
-    WHERE activity_date >= (
-        SELECT MAX(activity_date) FROM activity_log
-    ) - INTERVAL 30 DAY
-),
-
-activity_summary AS (
-    -- STEP 2: Hitung hari aktif & total aktivitas
+WITH student_activity_days AS (
+    -- Hitung jumlah hari aktif per student
     SELECT
         student_id,
         COUNT(DISTINCT activity_date) AS active_days
-    FROM recent_activity
+    FROM activity_log
     GROUP BY student_id
-    HAVING COUNT(DISTINCT activity_date) >= 3
-),
-
-retention_status AS (
-    -- STEP 3: Klasifikasi retention
-    SELECT
-        student_id,
-        active_days,
-        CASE
-            WHEN active_days >= 15 THEN 'Highly Retained'
-            WHEN active_days >= 7 THEN 'Moderately Retained'
-            ELSE 'Low Retention'
-        END AS retention_level
-    FROM activity_summary
 )
 
--- FINAL OUTPUT
 SELECT
-    s.name,
-    rs.active_days,
-    rs.retention_level
-FROM retention_status rs
-JOIN students s
-    ON s.id = rs.student_id
-ORDER BY rs.active_days DESC;
+    c.course_name,
+
+    -- Total student yang enroll ke course
+    COUNT(DISTINCT e.student_id) AS total_enrolled,
+
+    -- Student yang punya minimal 1 aktivitas
+    COUNT(DISTINCT CASE
+        WHEN sad.active_days >= 1 THEN e.student_id
+    END) AS active_students,
+
+    -- Student yang konsisten (>= 3 hari aktif)
+    COUNT(DISTINCT CASE
+        WHEN sad.active_days >= 3 THEN e.student_id
+    END) AS consistent_students,
+
+    -- Student yang drop (tidak punya aktivitas sama sekali)
+    COUNT(DISTINCT CASE
+        WHEN sad.student_id IS NULL THEN e.student_id
+    END) AS drop_students
+
+FROM courses c
+JOIN enrollments e
+    ON c.id = e.course_id
+LEFT JOIN student_activity_days sad
+    ON e.student_id = sad.student_id
+
+GROUP BY c.course_name
+ORDER BY total_enrolled DESC;
