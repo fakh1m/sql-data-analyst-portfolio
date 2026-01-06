@@ -65,46 +65,23 @@ Portofolio ini menjawab beberapa pertanyaan analitis, antara lain:
 
 ---
 
-## 🧩 Example Highlight — Student Activity Status (CTE)
+## 📊 SQL Case Studies
 
-Query berikut menunjukkan bagaimana CTE digunakan untuk memecah logic analisis menjadi beberapa langkah yang jelas dan readable:
+### 1️⃣ Student Engagement Analysis
+- Analyze student activity in the last 30 days
+- Aggregate total activity minutes per student
+- Classify engagement levels using business rules
 
-```sql
-WITH recent_activity AS (
-    SELECT student_id, activity_minutes
-    FROM activity_log
-    WHERE activity_date >= DATE_SUB(
-        (SELECT MAX(activity_date) FROM activity_log),
-        INTERVAL 30 DAY
-    )
-),
+📁 Query: `queries/student_activity_cte.sql`
 
-total_activity AS (
-    SELECT student_id, SUM(activity_minutes) AS total_minutes
-    FROM recent_activity
-    GROUP BY student_id
-),
+---
 
-student_status AS (
-    SELECT
-        student_id,
-        total_minutes,
-        CASE
-            WHEN total_minutes >= 300 THEN 'Very Active'
-            WHEN total_minutes >= 100 THEN 'Active'
-            ELSE 'Inactive'
-        END AS status
-    FROM total_activity
-)
+### 2️⃣ Student Retention Funnel
+- Identify active students in the last 30 days
+- Measure engagement consistency using active days
+- Classify retention level with HAVING-based filtering
 
-SELECT
-    s.name,
-    ss.total_minutes,
-    ss.status
-FROM student_status ss
-JOIN students s ON s.id = ss.student_id
-ORDER BY ss.total_minutes DESC;
-```
+📁 Query: `queries/student_retention_funnel.sql`
 
 ---
 
