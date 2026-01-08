@@ -103,6 +103,26 @@ Analyze the engagement funnel from course enrollment to activity consistency, in
   - retention strategy planning
   - course quality evaluation
   - targeted engagement improvements
+---
+
+### Case 3 — Student Retention (Time-based Cohort)
+
+Business Question:
+How many students remain active over time after registration?
+
+🎯 Goal
+- Group students by registration month
+- Measure how many are still active in the following months
+- Identify retention patterns
+
+🗂 Tables Used
+- students
+- activity_log
+
+🧠 High-Level Logic
+- Assign each student to a registration cohort (month)
+- Track activity in subsequent months
+- Count retained students per cohort
 
 ---
 
