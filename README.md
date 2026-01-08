@@ -1,55 +1,57 @@
 # SQL Data Analyst Portfolio
 
-A SQL portfolio showcasing **Junior Data Analyst** skills through realistic, problem-driven case studies.  
-This repository emphasizes clean querying, proper table relationships, aggregation logic, and exploratory data analysis using SQL.
+A SQL portfolio showcasing **junior-level data analyst** skills through
+realistic, problem-driven analytical case studies.
+
+This repository focuses on structured querying, table relationships,
+aggregation logic, and translating data into business-relevant insights.
 
 ---
 
 ## 📌 Overview
-This repository contains a collection of SQL queries that demonstrate **basic to intermediate Junior Data Analyst competencies**.  
-The analysis approach is **problem-driven**, focusing on answering business questions rather than simply displaying data.
+This repository contains a collection of SQL case studies designed to
+demonstrate **basic to intermediate SQL proficiency** for data analysis roles.
 
-Key focus areas:
-- Clean and structured data querying
-- Understanding relational data models
+The approach emphasizes **problem-solving and analytical thinking**, not
+simply data extraction.
+
+Core focus areas:
+- Clean and readable SQL queries
+- Understanding table relationships
 - Aggregation and business logic
-- Exploratory Data Analysis (EDA) using SQL
+- Exploratory analysis using SQL
 
 ---
 
-## 🗂️ Dataset & Schema
-The dataset simulates an online education platform with the following core tables:
+## 🗂 Dataset & Schema
+The dataset simulates an online education platform with the following tables:
 
 - **students**  
-  Stores student information  
   `(id, name, gender, education_level, registered_at)`
 
 - **courses**  
-  Stores course information  
   `(id, course_name)`
 
 - **enrollments**  
-  Student–course relationship table  
   `(student_id, course_id, enrolled_at, progress_percent)`
 
 - **activity_log**  
-  Daily student activity records  
   `(student_id, activity_date, activity_minutes)`
 
-### Table Relationships
+**Key relationships:**
 - `students.id → enrollments.student_id`
 - `courses.id → enrollments.course_id`
 - `students.id → activity_log.student_id`
 
 ---
 
-## 🧠 Key SQL Skills Demonstrated
+## 🧠 SQL Skills Demonstrated
 - `SELECT`, `WHERE`, `ORDER BY`, `LIMIT`
 - `INNER JOIN` and `LEFT JOIN`
-- Handling `NULL` and missing data
-- Aggregations: `COUNT`, `COUNT DISTINCT`, `SUM`, `AVG`
+- Handling missing data and `NULL` values
+- Aggregation: `COUNT`, `COUNT DISTINCT`, `SUM`, `AVG`
 - `HAVING` vs `WHERE`
-- `CASE WHEN` for categorization
+- Conditional logic using `CASE WHEN`
 - Time-based filtering
 - Common Table Expressions (CTE)
 
@@ -57,81 +59,48 @@ The dataset simulates an online education platform with the following core table
 
 ## 📊 SQL Case Studies
 
-### 1️⃣ Student Engagement Analysis (CTE & Aggregation)
-Analyze student activity over the last 30 days and classify engagement levels based on total activity minutes.
+### 1️⃣ Student Engagement Analysis
+Classifies students based on total activity minutes within the last 30 days.
 
-**Key objectives:**
-- Aggregate total activity minutes per student
-- Classify engagement using business rules
-- Identify highly engaged students
-
-📁 Query file:  
-`queries/student_activity_cte.sql`
-
-📈 Insights:
-
-- Student activity is unevenly distributed, where a small group of students contributes significantly more activity minutes than the rest.
-- Most students fall into the Inactive or Active categories, indicating that high engagement is limited to a minority.
-- Total activity minutes over a 30-day window provide a clear and interpretable signal for engagement segmentation.
-- This classification can be used to:
-    - identify high-engagement students for advanced programs
-    - detect low-engagement students for early intervention or reminders
+📁 Query: `queries/student_activity_cte.sql`  
+📄 Insight: `insights/case_1_student_engagement.md`
 
 ---
 
-### 2️⃣ Course Engagement Funnel Analysis (Retention & Funnel)
-Analyze the engagement funnel from course enrollment to activity consistency, including student drop-off detection.
+### 2️⃣ Course Engagement Funnel Analysis
+Analyzes student engagement per course from enrollment to activity consistency,
+including drop-off detection.
 
-**Metrics covered:**
-- Total enrolled students
-- Active students (≥ 1 activity)
-- Consistent students (≥ 3 active days)
-- Drop-off students (no recorded activity)
-
-📁 Query file:  
-`queries/course_engagement_funnel.sql`
-
-📈 Insights:
-
-- Not all enrolled students become active, showing a noticeable drop-off after enrollment.
-- Only a subset of active students reaches the consistent engagement stage (≥ 3 active days).
-- Courses with higher proportions of consistent students tend to indicate:
-  - better course design
-  - clearer learning paths
-  - stronger onboarding experience
-- Funnel metrics help quantify where engagement loss occurs, supporting:
-  - retention strategy planning
-  - course quality evaluation
-  - targeted engagement improvements
----
-
-### Case 3 — Student Retention (Time-based Cohort)
-
-Business Question:
-How many students remain active over time after registration?
-
-🎯 Goal
-- Group students by registration month
-- Measure how many are still active in the following months
-- Identify retention patterns
-
-🗂 Tables Used
-- students
-- activity_log
-
-🧠 High-Level Logic
-- Assign each student to a registration cohort (month)
-- Track activity in subsequent months
-- Count retained students per cohort
+📁 Query: `queries/course_engagement_funnel.sql`  
+📄 Insight: `insights/case_2_course_funnel.md`
 
 ---
 
-## 🛠️ Tools & Environment
-- SQL (MySQL)
+### 3️⃣ Cohort Retention Analysis
+Examines student retention behavior across monthly cohorts based on
+registration date and subsequent activity.
+
+📁 Query: `queries/cohort_retention.sql`  
+📄 Insight: `insights/case_3_cohort_retention.md`
+
+---
+
+## 📈 Key Insights
+Each case study includes **business-oriented insights** derived from SQL analysis.
+Detailed interpretations and explanations are documented separately
+in the `insights/` folder.
+
+---
+
+## 🛠 Tools & Environment
+- SQL (MySQL-compatible syntax)
 - Local database environment
 - Git & GitHub
 
 ---
 
-## 📬 Notes
-This portfolio is a **living document** and will continue to evolve with more advanced analytical cases, improved business logic, and performance considerations.
+## 🎯 Purpose
+This project serves as a portfolio piece to demonstrate
+junior-level data analyst skills, including SQL proficiency,
+analytical reasoning, and the ability to translate data
+into meaningful business insights.
